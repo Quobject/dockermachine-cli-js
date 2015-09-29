@@ -1,0 +1,5 @@
+node_modules
+test/npm-debug.log
+test/keys
+my_config.json
+npm-debug.log
