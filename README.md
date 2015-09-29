@@ -59,3 +59,27 @@ dockerMachine.command('create machinename', function (err, data) {
 });
 
 ```
+
+* ls
+
+```js
+dockerMachine.command('ls').then(function (data) {
+  console.log('data = ', data); 
+});
+
+//data =  { command: 'docker-machine ls ',
+//  raw: '["NAME                                    ACTIVE   DRIVER      STATE     URL                        SWARM\\nmachinename5                                     amazonec2   Running   tcp://52.64.159.14:2376     \\nmachinename5
+//            amazonec2   Running   tcp://52.64.171.124:2376   \\n",""]',
+//machineList:
+//[ { name: 'machinename5',
+//  active: '',
+//  driver: 'amazonec2',
+//  state: 'Running',
+//  url: 'tcp://52.64.159.14:2376',
+//  swarm: '' },
+//  { name: 'machinename5aaaaaaaaaaaaaaaaaaaaaaaaa',
+//    active: '',
+//    driver: 'amazonec2',
+//    state: 'Running',
+//    url: 'tcp://52.64.171.124:2376',
+//    swarm: '' } ] }

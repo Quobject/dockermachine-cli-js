@@ -26,12 +26,12 @@ var config = require('../my_config.json');
 
 describe('docker', function () {
 
-  it('should merge opts', function () {
-    var dockerMachine = new DockerMachine({ a: 'a' });
-    assert.isNotNull(dockerMachine);
-    assert.equal(dockerMachine.a, 'a');
-    //console.log('dockerMachine', dockerMachine);
-  });
+  //it('should merge opts', function () {
+  //  var dockerMachine = new DockerMachine({ a: 'a' });
+  //  assert.isNotNull(dockerMachine);
+  //  assert.equal(dockerMachine.a, 'a');
+  //  //console.log('dockerMachine', dockerMachine);
+  //});
 
 
   it('command ls should pass', function (done) {
@@ -52,57 +52,75 @@ describe('docker', function () {
   });
 
 
-  it('command ls2 should fail', function (done) {
-    var dockerMachine = new DockerMachine();
-    assert.isNotNull(dockerMachine);
-    var failed = false;
-    var err = null;
-    dockerMachine.command('ls2').then(function (data) {
-      //console.log('data = ', data);
-      assert.isNotNull(data);
-    }).catch(function (error) {
-      assert.isNotNull(error);
-      err = error;
-      failed = true;
-      //console.log('error = ', error);
-    }).finally(function () {
-      //console.log('finally ');
-      assert.isTrue(failed);
-      assert.isNotNull(err);
-      done();
-    });
-  });
+  //it('command ls2 should fail', function (done) {
+  //  var dockerMachine = new DockerMachine();
+  //  assert.isNotNull(dockerMachine);
+  //  var failed = false;
+  //  var err = null;
+  //  dockerMachine.command('ls2').then(function (data) {
+  //    //console.log('data = ', data);
+  //    assert.isNotNull(data);
+  //  }).catch(function (error) {
+  //    assert.isNotNull(error);
+  //    err = error;
+  //    failed = true;
+  //    //console.log('error = ', error);
+  //  }).finally(function () {
+  //    //console.log('finally ');
+  //    assert.isTrue(failed);
+  //    assert.isNotNull(err);
+  //    done();
+  //  });
+  //});
 
 
-  it('command create should pass', function (done) {
-    this.timeout(10*60*1000);//10 minutes
-    var dockerMachine = new DockerMachine({
-      driver: {
-        'driver': 'amazonec2',
-        'amazonec2-access-key': config.aws.accessKeyId,
-        'amazonec2-secret-key': config.aws.secretAccessKey,
-        'amazonec2-region': 'ap-southeast-2',
-        'amazonec2-vpc-id': 'vpc-3413c051',
-        'amazonec2-ami': 'ami-b59ce48f',
-        'amazonec2-zone': 'a',
-        'amazonec2-instance-type': 't2.micro',
-        'amazonec2-root-size': '8'
-      }
-    });
+  //it('command create should pass', function (done) {
+  //  this.timeout(10*60*1000);//10 minutes
+  //  var dockerMachine = new DockerMachine({
+  //    driver: {
+  //      'driver': 'amazonec2',
+  //      'amazonec2-access-key': config.aws.accessKeyId,
+  //      'amazonec2-secret-key': config.aws.secretAccessKey,
+  //      'amazonec2-region': 'ap-southeast-2',
+  //      'amazonec2-vpc-id': 'vpc-3413c051',
+  //      'amazonec2-ami': 'ami-b59ce48f',
+  //      'amazonec2-zone': 'a',
+  //      'amazonec2-instance-type': 't2.micro',
+  //      'amazonec2-root-size': '8'
+  //    }
+  //  });
 
-    assert.isNotNull(dockerMachine);
-    var failed = false;
-    var err = null;
-    dockerMachine.command('create machinename4').then(function (data) {
-      console.log('data = ', data);
-      assert.isNotNull(data);
-    }).finally(function () {
-      //console.log('finally ');
-      assert.isFalse(failed);
-      assert.isNull(err);
-      done();
-    });
-  });
+  //  assert.isNotNull(dockerMachine);
+  //  var failed = false;
+  //  var err = null;
+  //  dockerMachine.command('create machinename5aaaaaaaaaaaaaaaaaaaaaaaaa').then(function (data) {
+  //    console.log('data = ', data);
+  //    assert.isNotNull(data);
+  //  }).finally(function () {
+  //    //console.log('finally ');
+  //    assert.isFalse(failed);
+  //    assert.isNull(err);
+  //    done();
+  //  });
+  //});
+
+  //it('command ssh should pass', function (done) {
+  //  this.timeout(10 * 60 * 1000);//10 minutes
+  //  var dockerMachine = new DockerMachine();
+
+  //  assert.isNotNull(dockerMachine);
+  //  var failed = false;
+  //  var err = null;
+  //  dockerMachine.command('ssh machinename4 \'echo A file created remotely! >foo.txt\'').then(function (data) {
+  //    console.log('data = ', data);
+  //    assert.isNotNull(data);
+  //  }).finally(function () {
+  //    //console.log('finally ');
+  //    assert.isFalse(failed);
+  //    assert.isNull(err);
+  //    done();
+  //  });
+  //});
 
 
 });
