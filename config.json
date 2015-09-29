@@ -1,4 +1,6 @@
 {
-  "DockerMachineName": "enter value here"
- 
+   "aws": {
+      "accessKeyId": "enter value here",
+      "secretAccessKey": "enter value here"
+    } 
 }

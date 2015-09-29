@@ -25,29 +25,37 @@ var DockerMachine = require('dockermachine-cli-js');
 With promise
 
 ```js
-   var dockerMachine = new DockerMachine({
-     machinename: 'aws_machine01',
-     cwd: 'nginx'
-   });
+var dockerMachine = new DockerMachine({
+  driver: {
+    'driver': 'amazonec2',
+    'amazonec2-access-key': PUTVALUEHERE,
+    'amazonec2-secret-key': abcdefPUTVALUEHERE,
+    'amazonec2-region': 'ap-southeast-2',
+    'amazonec2-vpc-id': 'vpc-1234567',
+    'amazonec2-ami': 'ami-b59ce48f',
+    'amazonec2-zone': 'a',
+    'amazonec2-instance-type': 't2.micro',
+    'amazonec2-root-size': '8'
+  }
+});
 
-   dockerMachine.command(' to do').then(function (data) {
-    console.log('data = ', data);
-   })
+dockerMachine.command('create machinename').then(function (data) {
+  console.log('data = ', data); 
+});
 
+//data = {
+//  command: 'docker-machine create machinename --driver amazonec2 --amazonec2-access-key PUTVALUEHERE --amazonec2-secret-key abcdefPUTVALUEHERE --amazonec2-region ap-southeast-2 --amazonec2-vpc-id vpc-1234567 --amazonec2-ami ami-b59ce48f --amazonec2-zone a --amazonec2-instance-type t2.micro --amazonec2-root-size 8 ',
+//  raw: '["Launching instance...\\nTo see how to connect Docker to this machine, run: docker-machine env machinename\\n",""]'
+//}
 
 ```
 
 With callback:
 
 ```js
-   var docker = new Docker({
-     cwd: 'nginx'
-   });
 
-  dockerMachine.command('to do', function (err, data) {
-    console.log('data = ', data);
-  });
-
-
+dockerMachine.command('create machinename', function (err, data) {
+  console.log('data = ', data);
+});
 
 ```
