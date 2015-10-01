@@ -77,7 +77,7 @@ dockerMachine.command('ls').then(function (data) {
 //  state: 'Running',
 //  url: 'tcp://52.64.159.14:2376',
 //  swarm: '' },
-//  { name: 'machinename5aaaaaaaaaaaaaaaaaaaaaaaaa',
+//  { name: 'machinename5',
 //    active: '',
 //    driver: 'amazonec2',
 //    state: 'Running',
