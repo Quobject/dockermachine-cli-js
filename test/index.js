@@ -122,48 +122,13 @@ describe('DockerMachine', function () {
   //  });
   //});
 
-  it('command inspect should pass', function (done) {
-    var dockerMachine = new DockerMachine();
-
-    assert.isNotNull(dockerMachine);
-    var failed = false;
-    var err = null;
-    dockerMachine.command('inspect consul1').then(function (data) {
-      console.log('data = ', data);
-      assert.isNotNull(data);
-    }).finally(function () {
-      //console.log('finally ');
-      assert.isFalse(failed);
-      assert.isNull(err);
-      done();
-    });
-  });
-
-  it('command inspect with format should pass', function (done) {
-    var dockerMachine = new DockerMachine();
-
-    assert.isNotNull(dockerMachine);
-    var failed = false;
-    var err = null;
-    dockerMachine.command('inspect consul2 --format \'{{ .Driver.PrivateIPAddress }}\'').then(function (data) {
-      console.log('data = ', data);
-      assert.isNotNull(data);
-    }).finally(function () {
-      //console.log('finally ');
-      assert.isFalse(failed);
-      assert.isNull(err);
-      done();
-    });
-  });
-
-  //it('command config should pass', function (done) {
-  //  this.timeout(1 * 60 * 1000);//1 minute
+  //it('command inspect should pass', function (done) {
   //  var dockerMachine = new DockerMachine();
 
   //  assert.isNotNull(dockerMachine);
   //  var failed = false;
   //  var err = null;
-  //  dockerMachine.command('config machinename').then(function (data) {
+  //  dockerMachine.command('inspect consul1').then(function (data) {
   //    console.log('data = ', data);
   //    assert.isNotNull(data);
   //  }).finally(function () {
@@ -173,6 +138,41 @@ describe('DockerMachine', function () {
   //    done();
   //  });
   //});
+
+  //it('command inspect with format should pass', function (done) {
+  //  var dockerMachine = new DockerMachine();
+
+  //  assert.isNotNull(dockerMachine);
+  //  var failed = false;
+  //  var err = null;
+  //  dockerMachine.command('inspect consul2 --format \'{{ .Driver.PrivateIPAddress }}\'').then(function (data) {
+  //    console.log('data = ', data);
+  //    assert.isNotNull(data);
+  //  }).finally(function () {
+  //    //console.log('finally ');
+  //    assert.isFalse(failed);
+  //    assert.isNull(err);
+  //    done();
+  //  });
+  //});
+
+  it('command config should pass', function (done) {
+    this.timeout(1 * 60 * 1000);//1 minute
+    var dockerMachine = new DockerMachine();
+
+    assert.isNotNull(dockerMachine);
+    var failed = false;
+    var err = null;
+    dockerMachine.command('config consul1').then(function (data) {
+      console.log('data = ', data);
+      assert.isNotNull(data);
+    }).finally(function () {
+      //console.log('finally ');
+      assert.isFalse(failed);
+      assert.isNull(err);
+      done();
+    });
+  });
 
 
   //it('command ip should pass', function (done) {

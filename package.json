@@ -1,6 +1,6 @@
 {
   "name": "dockermachine-cli-js",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "A node.js wrapper for the docker-machine CLI",
   "main": "lib/index.js",
   "scripts": {
