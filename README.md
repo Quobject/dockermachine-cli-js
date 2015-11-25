@@ -180,15 +180,18 @@ dockerMachine.command('config machinename').then(function (data) {
 });
 
 //data = {
-//  command: 'docker-machine config machinename ',
-//  raw: '["--tlsverify --tlscacert=\\"/home/ubuntu/.docker/machine/machines/machinename/ca.pem\\" --tlscert=\\"/home/ubuntu/.docker/machine/machines/machinename/cert.pem\\" --tlskey=\\"/home/ubuntu/.docker/machine/machines/machinename/key.pem\\" -H=tcp://52.64.186.82:2376",""]',
+//  command: 'docker-machine config consul1 ',
+//  raw: '["--tlsverify --tlscacert=\\"/home/ubuntu/.docker/machine/certs/ca.pem\\" --tlscert=\\"/home/ubuntu/.docker/machine/certs/cert.pem\\" --tlskey=\\"/home/ubuntu/.docker/machine/certs/key.pem\\" -H=tcp://54.165.211.120:2376",""]',
 //  machine:
 //   {
 //     tlsverify: true,
-//     tlscacert: '/home/ubuntu/.docker/machine/machines/machinename/ca.pem',
-//     tlscert: '/home/ubuntu/.docker/machine/machines/machinename/cert.pem',
-//     tlskey: '/home/ubuntu/.docker/machine/machines/machinename/key.pem',
-//     host: '52.64.186.89',
-//     port: '2376'
+//     tlscacert: '/home/ubuntu/.docker/machine/certs/ca.pem',
+//     tlscert: '/home/ubuntu/.docker/machine/certs/cert.pem',
+//     tlskey: '/home/ubuntu/.docker/machine/certs/key.pem',
+//     host: '54.165.211.120',
+//     port: '2376',
+//     config: '--tlsverify --tlscacert="/home/ubuntu/.docker/machine/certs/ca.pem" --tlscert="/home/ubuntu/.docker/machine/certs/cert.pem" --tlskey="/home/ubuntu/.docker/machine/certs/key.pem" -H=tcp://54.165.211.120:2376'
 //   }
 //}
+
+```
