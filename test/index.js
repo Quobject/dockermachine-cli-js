@@ -163,7 +163,7 @@ describe('DockerMachine', function () {
     assert.isNotNull(dockerMachine);
     var failed = false;
     var err = null;
-    dockerMachine.command('config consul1').then(function (data) {
+    dockerMachine.command('config consul-1-development.quobject.io').then(function (data) {
       console.log('data = ', data);
       assert.isNotNull(data);
     }).finally(function () {
