@@ -11,6 +11,7 @@
     "outDir":  "dist/"
   },
   "files": [
+    "src/my_config.ts",
     "src/index.ts",
     "src/index.spec.ts",
     "typings/index.d.ts"
