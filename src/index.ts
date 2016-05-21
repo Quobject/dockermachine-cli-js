@@ -1,30 +1,28 @@
-﻿/// <reference path="./../typings/index.d.ts" />
-import * as _ from 'lodash'
+﻿// import * as _ from 'lodash'
+import * as Promise from 'bluebird'
 
-class DockerMachine {
+export class DockerMachine {
 
-  constructor(private options: Options) {
+  constructor(private options?: Options) {
 
   }
 
-  command(command: string, callback: () => void ) {
+  command(command: string, callback?: () => void) {
+    return Promise.resolve().then(function () {
+      console.log('test')
+    })
+  }
+}
 
-  }  
+export interface Options {
+  driver: Driver
+}
 
-
+export interface Driver {
 
 }
 
-
-interface Options {
-  driver: Driver;
-}
-
-interface Driver {
-
-}
-
-class AWSDriver implements Driver {
+export class AWSDriver implements Driver {
   driver: string = 'amazonec2'
   'amazonec2-access-key': string
   'amazonec2-secret-key': string

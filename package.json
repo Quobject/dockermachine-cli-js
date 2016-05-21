@@ -8,7 +8,7 @@
     "typings.json"
   ],
   "scripts": {
-    "lint": "tslint 'src/**/*.ts'",
+    "lint": "tslint src/**/*.ts",
     "dependency-check": "dependency-check package.json",
     "build": "rimraf dist/ && tsc",
     "test-spec": "ts-node node_modules/blue-tape/bin/blue-tape.js \"src/**/*.spec.ts\" | tap-diff",
@@ -38,10 +38,10 @@
     "ts-node": "^0.7.3",
     "tslint": "^3.10.2",
     "tslint-config-standard": "^1.0.0",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4"
+    "typescript": "^1.8.10"
   },
   "dependencies": {
+    "bluebird": "^3.4.0",
     "lodash": "^4.12.0"
   }
 }
