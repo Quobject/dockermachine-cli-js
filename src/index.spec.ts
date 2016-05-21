@@ -1,10 +1,9 @@
 /* tslint:disable:no-shadowed-variable */
 import test = require('blue-tape');
 import { DockerMachine } from './index';
-import config from './my_config';
+const config = require('../my_config.json');
 
 console.log('config', config);
-// const pkg = require('../package.json');
 
 test('dockermachine-cli-js', t => {
   //t.test('ls', t => {
