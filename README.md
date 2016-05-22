@@ -62,8 +62,8 @@ Typescript:
 import { DockerMachine, AWSDriver } from 'dockermachine-cli-js';
 
 const awsDriver = new AWSDriver(
-  /* accessKey    */ config.accessKeyId,
-  /* secretKey    */ config.secretAccessKey,
+  /* accessKey    */ 'YOUR_KEY',
+  /* secretKey    */ 'YOUR_KEY',
   /* region       */ 'ap-southeast-2',
   /* vpcId        */ 'vpc-3413c051',
   /* ami          */ 'ami-b59ce48f',
