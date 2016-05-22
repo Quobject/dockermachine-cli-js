@@ -14,39 +14,35 @@ The docker-machine command line tool must be installed and accessible in the pat
     
     npm install dockermachine-cli-js
     
-Then:
-
-```js
-var DockerMachine = require('dockermachine-cli-js');
-```
 
 ## Usage
 
 With promise
 
 ```js
-var dockerMachine = new DockerMachine({
-  driver: {
-    'driver': 'amazonec2',
-    'amazonec2-access-key': 'PUTVALUEHERE',
-    'amazonec2-secret-key': 'abcdefPUTVALUEHERE',
-    'amazonec2-region': 'ap-southeast-2',
-    'amazonec2-vpc-id': 'vpc-1234567',
-    'amazonec2-ami': 'ami-b59ce48f',
-    'amazonec2-zone': 'a',
-    'amazonec2-instance-type': 't2.micro',
-    'amazonec2-root-size': '8'
-  }
-});
+var DockerMachineCLI = require('dockermachine-cli-js');
+
+var awsDriver = new DockerMachineCLI.AWSDriver(
+  /* accessKey    */ 'YOUR_KEY',
+  /* secretKey    */ 'YOUR_KEY',
+  /* region       */ 'ap-southeast-2',
+  /* vpcId        */ 'vpc-3413c051',
+  /* ami          */ 'ami-b59ce48f',
+  /* zone         */ 'a',
+  /* instanceType */ 't2.micro',
+  /* rootSize     */ '8');
+
+var dockerMachine = new DockerMachineCLI.DockerMachine({ driver: awsDriver });
 
 dockerMachine.command('create machinename').then(function (data) {
   console.log('data = ', data); 
 });
 
 //data = {
-//  command: 'docker-machine create machinename --driver amazonec2 --amazonec2-access-key PUTVALUEHERE --amazonec2-secret-key abcdefPUTVALUEHERE --amazonec2-region ap-southeast-2 --amazonec2-vpc-id vpc-1234567 --amazonec2-ami ami-b59ce48f --amazonec2-zone a --amazonec2-instance-type t2.micro --amazonec2-root-size 8 ',
-//  raw: '["Launching instance...\\nTo see how to connect Docker to this machine, run: docker-machine env machinename\\n",""]'
+//  command: 'docker-machine create machinename --driver amazonec2  --amazonec2-access-key YOUR_KEY --amazonec2-secret-key YOUR_KEY --amazonec2-region ap-southeast-2 --amazonec2-vpc-id vpc-3413c051 --amazonec2-ami ami-b59ce48f --amazonec2-zone a --amazonec2-instance-type t2.micro --amazonec2-root-size 8',
+//  raw: '"Running pre-create checks...\\nCreating machine...\\n(machinename) Launching instance...\\nWaiting for machine to be running, this may take a few minutes...\\nDetecting operating system of created instance...\\nWaiting for SSH to be available...\\nDetecting the provisioner...\\nProvisioning with ubuntu(upstart)...\\nInstalling Docker...\\nCopying certs to the local machine directory...\\nCopying certs to the remote machine...\\nSetting Docker configuration on the remote daemon...\\nChecking connection to Docker...\\nDocker is up and running!\\nTo see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env machinename\\n"'
 //}
+
 
 ```
 
@@ -55,6 +51,30 @@ With callback:
 ```js
 
 dockerMachine.command('create machinename', function (err, data) {
+  console.log('data = ', data);
+});
+
+```
+
+Typescript:
+
+```ts
+import { DockerMachine, AWSDriver } from 'dockermachine-cli-js';
+
+const awsDriver = new AWSDriver(
+  /* accessKey    */ config.accessKeyId,
+  /* secretKey    */ config.secretAccessKey,
+  /* region       */ 'ap-southeast-2',
+  /* vpcId        */ 'vpc-3413c051',
+  /* ami          */ 'ami-b59ce48f',
+  /* zone         */ 'a',
+  /* instanceType */ 't2.micro',
+  /* rootSize     */ '8');
+
+
+const dockerMachine = new DockerMachine({ driver: awsDriver });
+
+dockerMachine.command('create machinename').then(function (data) {
   console.log('data = ', data);
 });
 

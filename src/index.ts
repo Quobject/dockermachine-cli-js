@@ -1,10 +1,9 @@
-﻿// import * as _ from 'lodash'
+﻿import * as _ from 'lodash';
 import * as Promise from 'bluebird';
-//import * as child_process from 'child_process';
+import * as child_process from 'child_process';
 import * as os from 'os';
-import { exec } from 'shelljs';
 import { cliTable2Json } from 'cli-table-2-json';
-//const exec = child_process.exec;
+const exec = child_process.exec;
 
 
 const extractResult = function (result) {
@@ -15,8 +14,6 @@ const extractResult = function (result) {
       run: function (resultp) {
         const obj = JSON.parse(resultp.raw);
         const lines = obj.split(os.EOL);
-        //resultp.obj = obj;
-        //resultp.lines = lines;
         resultp.machineList = cliTable2Json(lines);
         return resultp;
       },
@@ -25,7 +22,7 @@ const extractResult = function (result) {
       re: / config /,
       run: function (resultp) {
         const obj = JSON.parse(resultp.raw);
-        const str = obj[0];
+        const str = obj;
         const config = str.split(os.EOL).join(' ');
 
         const extractValue = function (strp: string, name: string, rep?: RegExp) {
@@ -69,7 +66,7 @@ const extractResult = function (result) {
       run: function (resultp) {
         try {
           let obj = JSON.parse(resultp.raw);
-          resultp.machine = JSON.parse(obj[0]);
+          resultp.machine = JSON.parse(obj);
         } catch (e) {
           // do nothing
         }
@@ -103,54 +100,7 @@ export class DockerMachine {
     driver: new EmptyDriver(),
     }) { }
 
-  //public command(command: string, callback?: () => void) {
-  //  let dockerMachine = this;
-  //  let execCommand = 'docker-machine ' + command;
-
-  //  return Promise.resolve().then(function () {
-  //    // let params = this.options.driver.toParams()       
-  //    // console.log('dockerMachine = ', dockerMachine)
-  //    let params = dockerMachine.options.driver.toParams();
-  //    console.log('params = ', params);
-
-  //    execCommand += ' ' + params;
-  //    console.log('execCommand =', execCommand);
-
-  //    let execOptions = {
-  //      cwd: dockerMachine.options.currentWorkingDirectory,
-  //      env: {
-  //        DEBUG: '',
-  //        HOME: process.env.HOME,
-  //        PATH: process.env.PATH,
-  //      },
-  //      maxBuffer: 200 * 1024 * 1024,
-  //    };
-
-  //    console.log('exec options =', execOptions);
-
-  //    return new Promise(function (resolve, reject) {
-  //      exec(execCommand, execOptions, (error, stdout, stderr) => {
-  //        if (error) {
-  //          console.error(`exec error: ${error}`);
-  //          reject(error);
-  //        }
-  //        console.log(`stdout: ${stdout}`);
-  //        resolve(stdout);
-  //      });
-  //    });
-  //  }).then(function (data) {
-
-  //    let result = {
-  //      command: execCommand,
-  //      raw: JSON.stringify(data),
-  //    };
-  //    return extractResult(result);
-
-  //  }).nodeify(callback);
-
-  //}
-
-  public command(command: string, callback?: () => void) {
+  public command(command: string, callback?: (err, data) => void) {
     let dockerMachine = this;
     let execCommand = 'docker-machine ' + command;
 
@@ -175,13 +125,14 @@ export class DockerMachine {
 
       console.log('exec options =', execOptions);
 
-
       return new Promise(function (resolve, reject) {
-        exec(execCommand, execOptions, function (code, output, error) {
-          if (code !== 0) {
-            return reject(error);
+        exec(execCommand, execOptions, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`exec error: ${error}`);
+            reject(error);
           }
-          return resolve(output);
+          console.log(`stdout: ${stdout}`);
+          resolve(stdout);
         });
       });
     }).then(function (data) {
@@ -193,13 +144,12 @@ export class DockerMachine {
       return extractResult(result);
 
     }).nodeify(callback);
-
   }
 }
 
 export interface Options {
   driver: Driver;
-  currentWorkingDirectory: string;
+  currentWorkingDirectory?: string;
 }
 
 export interface Driver {
@@ -207,7 +157,6 @@ export interface Driver {
 }
 
 export class EmptyDriver implements Driver {
-  public driver: string = '';
 
   public toParams(): string {
     return '';
@@ -215,17 +164,26 @@ export class EmptyDriver implements Driver {
 }
 
 export class AWSDriver implements Driver {
-  public driver: string = 'amazonec2';
-  public 'amazonec2-access-key': string;
-  public 'amazonec2-secret-key': string;
-  public 'amazonec2-region': string;
-  public 'amazonec2-vpc-id': string;
-  public 'amazonec2-ami': string;
-  public 'amazonec2-zone': string;
-  public 'amazonec2-instance-type': string;
-  public 'amazonec2-root-size': string;
+
+  public constructor(
+    private accessKey: string,
+    private secretKey: string,
+    private region: string,
+    private vpcId: string,
+    private ami: string,
+    private zone: string,
+    private instanceType: string,
+    private rootSize: string
+  ) { }
+
 
   public toParams(): string {
-    return '';
+    const params = Object.keys(this).reduce((previousValue, key) => {
+      const value = this[key];
+      const awsKey = _.snakeCase(key).replace('_', '-');
+      return `${previousValue} --amazonec2-${awsKey} ${value}`;
+    }, '--driver amazonec2 ');
+
+    return params;
   }
 }

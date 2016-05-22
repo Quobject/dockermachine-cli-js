@@ -13,8 +13,7 @@
   "files": [
     "src/index.ts",
     "src/index.spec.ts",
-    "typings/index.d.ts",
-    "my_typings/shelljs/index.d.ts"
+    "typings/index.d.ts"
   ],
   "compileOnSave": false
 }
