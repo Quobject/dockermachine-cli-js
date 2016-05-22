@@ -1,6 +1,6 @@
 {
   "name": "dockermachine-cli-js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A node.js wrapper for the docker-machine CLI",
   "main": "dist/index.js",
   "files": [
@@ -38,7 +38,6 @@
   "dependencies": {
     "bluebird": "^3.4.0",
     "cli-table-2-json": "^1.0.8",
-    "lodash": "^4.12.0",
-    "shelljs": "^0.7.0"
+    "lodash": "^4.12.0"
   }
 }
