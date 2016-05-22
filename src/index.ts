@@ -1,9 +1,10 @@
 ﻿// import * as _ from 'lodash'
 import * as Promise from 'bluebird';
-import * as child_process from 'child_process';
+//import * as child_process from 'child_process';
 import * as os from 'os';
+import { exec } from 'shelljs';
 import { cliTable2Json } from 'cli-table-2-json';
-const exec = child_process.exec;
+//const exec = child_process.exec;
 
 
 const extractResult = function (result) {
@@ -14,11 +15,10 @@ const extractResult = function (result) {
       run: function (resultp) {
         const obj = JSON.parse(resultp.raw);
         const lines = obj.split(os.EOL);
-        resultp.obj = obj;
-        resultp.lines = lines;
+        //resultp.obj = obj;
+        //resultp.lines = lines;
         resultp.machineList = cliTable2Json(lines);
         return resultp;
-        // return (resultp.machineList = lines);
       },
     },
     {
@@ -103,6 +103,53 @@ export class DockerMachine {
     driver: new EmptyDriver(),
     }) { }
 
+  //public command(command: string, callback?: () => void) {
+  //  let dockerMachine = this;
+  //  let execCommand = 'docker-machine ' + command;
+
+  //  return Promise.resolve().then(function () {
+  //    // let params = this.options.driver.toParams()       
+  //    // console.log('dockerMachine = ', dockerMachine)
+  //    let params = dockerMachine.options.driver.toParams();
+  //    console.log('params = ', params);
+
+  //    execCommand += ' ' + params;
+  //    console.log('execCommand =', execCommand);
+
+  //    let execOptions = {
+  //      cwd: dockerMachine.options.currentWorkingDirectory,
+  //      env: {
+  //        DEBUG: '',
+  //        HOME: process.env.HOME,
+  //        PATH: process.env.PATH,
+  //      },
+  //      maxBuffer: 200 * 1024 * 1024,
+  //    };
+
+  //    console.log('exec options =', execOptions);
+
+  //    return new Promise(function (resolve, reject) {
+  //      exec(execCommand, execOptions, (error, stdout, stderr) => {
+  //        if (error) {
+  //          console.error(`exec error: ${error}`);
+  //          reject(error);
+  //        }
+  //        console.log(`stdout: ${stdout}`);
+  //        resolve(stdout);
+  //      });
+  //    });
+  //  }).then(function (data) {
+
+  //    let result = {
+  //      command: execCommand,
+  //      raw: JSON.stringify(data),
+  //    };
+  //    return extractResult(result);
+
+  //  }).nodeify(callback);
+
+  //}
+
   public command(command: string, callback?: () => void) {
     let dockerMachine = this;
     let execCommand = 'docker-machine ' + command;
@@ -128,14 +175,13 @@ export class DockerMachine {
 
       console.log('exec options =', execOptions);
 
+
       return new Promise(function (resolve, reject) {
-        exec(execCommand, execOptions, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`exec error: ${error}`);
-            reject(error);
+        exec(execCommand, execOptions, function (code, output, error) {
+          if (code !== 0) {
+            return reject(error);
           }
-          console.log(`stdout: ${stdout}`);
-          resolve(stdout);
+          return resolve(output);
         });
       });
     }).then(function (data) {

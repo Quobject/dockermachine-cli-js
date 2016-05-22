@@ -23,8 +23,8 @@ test('dockermachine-cli-js', t => {
   t.test('create machinename', t => {
     let dockerMachine = new DockerMachine();
 
-    dockerMachine.command('ls2').then(function (data) {
-      console.log(data);
+    dockerMachine.command('ls').then(function (data) {
+      console.log('data = ', data);
     });
 
     t.end();
