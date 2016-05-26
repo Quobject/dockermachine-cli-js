@@ -7,24 +7,25 @@ const config = require('../my_config.json');
 console.log('config', config);
 
 test('dockermachine-cli-js', t => {
-  //t.test('ls', t => {
-  //  let dockerMachine = new DockerMachine();
+  t.test('ls', t => {
+    let dockerMachine = new DockerMachine();
 
-  //  //dockerMachine.command('ls').then(function (data) {
-  //  //  console.log(data);
-  //  //});
+    //dockerMachine.command('ls').then(function (data) {
+    //  console.log(data);
+    //});
 
-  //  //dockerMachine.command('ls', function (err, data) {
-  //  //  console.log('data = ', data);
-  //  //});
+    //dockerMachine.command('ls', function (err, data) {
+    //  console.log('data = ', data);
+    //});
 
 
-  //  //dockerMachine.command('ls2').then(function (data) {
-  //  //  console.log(data);
-  //  //});
+    return dockerMachine.command('ls').then(function (data) {
+      console.log(data);
+      t.ok(data);
+    });
 
-  //  t.end();
-  //});
+
+  });
 
   //t.test('create machinename', t => {
   //  const awsDriver = new AWSDriver(
@@ -47,19 +48,19 @@ test('dockermachine-cli-js', t => {
   //  t.end();
   //});
 
-  t.test('config', t => {
-    let dockerMachine = new DockerMachine();
+  //t.test('config', t => {
+  //  let dockerMachine = new DockerMachine();
 
-    //dockerMachine.command('config machinename').then(function (data) {
-    //  console.log(data);
-    //});
+  //  //dockerMachine.command('config machinename').then(function (data) {
+  //  //  console.log(data);
+  //  //});
 
-    dockerMachine.command('inspect machinename').then(function (data) {
-      console.log(data);
-    });
+  //  dockerMachine.command('inspect machinename').then(function (data) {
+  //    console.log(data);
+  //  });
 
-    t.end();
-  });
+  //  t.end();
+  //});
 
 
 });

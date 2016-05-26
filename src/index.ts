@@ -108,10 +108,10 @@ export class DockerMachine {
       // let params = this.options.driver.toParams()       
       // console.log('dockerMachine = ', dockerMachine)
       let params = dockerMachine.options.driver.toParams();
-      console.log('params = ', params);
+      //console.log('params = ', params);
 
       execCommand += ' ' + params;
-      console.log('execCommand =', execCommand);
+      //console.log('execCommand =', execCommand);
 
       let execOptions = {
         cwd: dockerMachine.options.currentWorkingDirectory,
@@ -128,10 +128,11 @@ export class DockerMachine {
       return new Promise(function (resolve, reject) {
         exec(execCommand, execOptions, (error, stdout, stderr) => {
           if (error) {
-            console.error(`exec error: ${error}`);
-            reject(error);
+            const message = `error: '${error}' stdout = '${stdout}' stderr = '${stderr}'`;
+            console.error(message);
+            reject(message);
           }
-          console.log(`stdout: ${stdout}`);
+          //console.log(`stdout: ${stdout}`);
           resolve(stdout);
         });
       });
