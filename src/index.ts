@@ -174,7 +174,10 @@ export class AWSDriver implements Driver {
     private ami: string,
     private zone: string,
     private instanceType: string,
-    private rootSize: string
+    private rootSize: string,
+    private swarm: string,
+    private swarmDiscovery: string,
+    private swarmMaster: string
   ) { }
 
 

@@ -23,14 +23,17 @@ With promise
 var DockerMachineCLI = require('dockermachine-cli-js');
 
 var awsDriver = new DockerMachineCLI.AWSDriver(
-  /* accessKey    */ 'YOUR_KEY',
-  /* secretKey    */ 'YOUR_KEY',
-  /* region       */ 'ap-southeast-2',
-  /* vpcId        */ 'vpc-3413c051',
-  /* ami          */ 'ami-b59ce48f',
-  /* zone         */ 'a',
-  /* instanceType */ 't2.micro',
-  /* rootSize     */ '8');
+  /* accessKey      */ 'YOUR_KEY',
+  /* secretKey      */ 'YOUR_KEY',
+  /* region         */ 'ap-southeast-2',
+  /* vpcId          */ 'vpc-3413c051',
+  /* ami            */ 'ami-b59ce48f',
+  /* zone           */ 'a',
+  /* instanceType   */ 't2.micro',
+  /* rootSize       */ '8',
+  /* swarm          */ null,
+  /* swarmDiscovery */ null,
+  /* swarmMaster    */ null);
 
 var dockerMachine = new DockerMachineCLI.DockerMachine({ driver: awsDriver });
 

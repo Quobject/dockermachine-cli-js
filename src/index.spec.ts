@@ -36,8 +36,10 @@ test('dockermachine-cli-js', t => {
   //    /* ami          */ 'ami-b59ce48f',
   //    /* zone         */ 'a',
   //    /* instanceType */ 't2.micro',
-  //    /* rootSize     */ '8');
-
+  //    /* rootSize     */ '8',
+  //    /* swarm          */ null,
+  //    /* swarmDiscovery */ null,
+  //    /* swarmMaster    */ null);
 
   //  const dockerMachine = new DockerMachine({ driver: awsDriver });
 
