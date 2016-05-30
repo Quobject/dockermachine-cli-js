@@ -27,28 +27,29 @@ test('dockermachine-cli-js', t => {
 
   });
 
-  //t.test('create machinename', t => {
-  //  const awsDriver = new AWSDriver(
-  //    /* accessKey    */ config.accessKeyId,
-  //    /* secretKey    */ config.secretAccessKey,
-  //    /* region       */ 'ap-southeast-2',
-  //    /* vpcId        */ 'vpc-3413c051',
-  //    /* ami          */ 'ami-b59ce48f',
-  //    /* zone         */ 'a',
-  //    /* instanceType */ 't2.micro',
-  //    /* rootSize     */ '8',
-  //    /* swarm          */ null,
-  //    /* swarmDiscovery */ null,
-  //    /* swarmMaster    */ null);
+  t.test('create machinename', t => {
+    const awsDriver = new AWSDriver(
+      /* accessKey    */ config.accessKeyId,
+      /* secretKey    */ config.secretAccessKey,
+      /* region       */ 'ap-southeast-2',
+      /* vpcId        */ 'vpc-3413c051',
+      /* ami          */ 'ami-b59ce48f',
+      /* zone         */ 'a',
+      /* instanceType */ 't2.micro',
+      /* rootSize     */ '8',
+      /* swarm          */ null,
+      /* swarmDiscovery */ null,
+      /* swarmMaster    */ null,
+      /* securityGroup  */ null);
 
-  //  const dockerMachine = new DockerMachine({ driver: awsDriver });
+    const dockerMachine = new DockerMachine({ driver: awsDriver });
 
-  //  dockerMachine.command('create machinename').then(function (data) {
-  //    console.log('data = ', data);
-  //  });
+    dockerMachine.command('create machinename').then(function (data) {
+      console.log('data = ', data);
+    });
 
-  //  t.end();
-  //});
+    t.end();
+  });
 
   //t.test('config', t => {
   //  let dockerMachine = new DockerMachine();

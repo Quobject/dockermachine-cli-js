@@ -177,7 +177,8 @@ export class AWSDriver implements Driver {
     private rootSize: string,
     private swarm: string,
     private swarmDiscovery: string,
-    private swarmMaster: string
+    private swarmMaster: string,
+    private securityGroup: string
   ) { }
 
 
@@ -185,7 +186,11 @@ export class AWSDriver implements Driver {
     const params = Object.keys(this).reduce((previousValue, key) => {
       const value = this[key];
       const awsKey = _.snakeCase(key).replace('_', '-');
-      return `${previousValue} --amazonec2-${awsKey} ${value}`;
+      if (value) {
+        return `${previousValue} --amazonec2-${awsKey} ${value}`;
+      } else {
+        return previousValue;
+      }
     }, '--driver amazonec2 ');
 
     return params;

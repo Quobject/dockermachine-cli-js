@@ -33,7 +33,8 @@ var awsDriver = new DockerMachineCLI.AWSDriver(
   /* rootSize       */ '8',
   /* swarm          */ null,
   /* swarmDiscovery */ null,
-  /* swarmMaster    */ null);
+  /* swarmMaster    */ null,
+  /* securityGroup  */ null);
 
 var dockerMachine = new DockerMachineCLI.DockerMachine({ driver: awsDriver });
 
@@ -65,14 +66,18 @@ Typescript:
 import { DockerMachine, AWSDriver } from 'dockermachine-cli-js';
 
 const awsDriver = new AWSDriver(
-  /* accessKey    */ 'YOUR_KEY',
-  /* secretKey    */ 'YOUR_KEY',
-  /* region       */ 'ap-southeast-2',
-  /* vpcId        */ 'vpc-3413c051',
-  /* ami          */ 'ami-b59ce48f',
-  /* zone         */ 'a',
-  /* instanceType */ 't2.micro',
-  /* rootSize     */ '8');
+  /* accessKey      */ 'YOUR_KEY',
+  /* secretKey      */ 'YOUR_KEY',
+  /* region         */ 'ap-southeast-2',
+  /* vpcId          */ 'vpc-3413c051',
+  /* ami            */ 'ami-b59ce48f',
+  /* zone           */ 'a',
+  /* instanceType   */ 't2.micro',
+  /* rootSize       */ '8',
+  /* swarm          */ null,
+  /* swarmDiscovery */ null,
+  /* swarmMaster    */ null,
+  /* securityGroup  */ null);
 
 
 const dockerMachine = new DockerMachine({ driver: awsDriver });
