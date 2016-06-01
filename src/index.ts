@@ -95,9 +95,7 @@ const extractResult = function (result) {
 
 export class DockerMachine {
 
-  constructor(private options: IOptions = {
-    driver: new EmptyDriver()
-  }) { }
+  constructor(private options: IOptions = new Options()) { }
 
   public command(command: string, callback?: (err, data) => void) {
     let dockerMachine = this;
@@ -148,7 +146,7 @@ export class DockerMachine {
 }
 
 export interface IOptions {
-  driver: Driver;
+  driver?: Driver;
   currentWorkingDirectory?: string;
   swarm?: string,
   swarmDiscovery?: string,
@@ -159,11 +157,11 @@ export interface IOptions {
 export class Options implements IOptions {
 
   public constructor(
-    public driver: Driver,
-    public currentWorkingDirectory: string,
-    public swarm: string,
-    public swarmDiscovery: string,
-    public swarmMaster: string
+    public driver: Driver = new EmptyDriver(),
+    public currentWorkingDirectory: string = null,
+    public swarm: string = null,
+    public swarmDiscovery: string = null,
+    public swarmMaster: string = null
   ) { }
 
 
