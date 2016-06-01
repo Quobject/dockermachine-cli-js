@@ -1,7 +1,7 @@
 /* tslint:disable:no-shadowed-variable */
 /* tslint:disable:no-unused-variable */
 import test = require('blue-tape');
-import { DockerMachine, AWSDriver } from './index';
+import { DockerMachine, AWSDriver, Options } from './index';
 const config = require('../my_config.json');
 
 console.log('config', config);
@@ -37,12 +37,17 @@ test('dockermachine-cli-js', t => {
       /* zone         */ 'a',
       /* instanceType */ 't2.micro',
       /* rootSize     */ '8',
-      /* swarm          */ null,
-      /* swarmDiscovery */ null,
-      /* swarmMaster    */ null,
       /* securityGroup  */ null);
 
-    const dockerMachine = new DockerMachine({ driver: awsDriver });
+    const options = new Options(
+      /* driver         */ awsDriver,
+      /* currentWorkingDirectory */ null,
+      /* swarm          */ null,
+      /* swarmDiscovery */ null,
+      /* swarmMaster    */ null);
+
+
+    const dockerMachine = new DockerMachine(options);
 
     dockerMachine.command('create machinename').then(function (data) {
       console.log('data = ', data);

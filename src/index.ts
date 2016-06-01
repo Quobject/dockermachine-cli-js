@@ -95,10 +95,9 @@ const extractResult = function (result) {
 
 export class DockerMachine {
 
-  constructor(private options: Options = {
-    currentWorkingDirectory: null,
-    driver: new EmptyDriver(),
-    }) { }
+  constructor(private options: IOptions = {
+    driver: new EmptyDriver()
+  }) { }
 
   public command(command: string, callback?: (err, data) => void) {
     let dockerMachine = this;
@@ -148,9 +147,45 @@ export class DockerMachine {
   }
 }
 
-export interface Options {
+export interface IOptions {
   driver: Driver;
   currentWorkingDirectory?: string;
+  swarm?: string,
+  swarmDiscovery?: string,
+  swarmMaster?: string,
+
+}
+
+export class Options implements IOptions {
+
+  public constructor(
+    public driver: Driver,
+    public currentWorkingDirectory: string,
+    public swarm: string,
+    public swarmDiscovery: string,
+    public swarmMaster: string
+  ) { }
+
+
+  public toParams(): string {
+    const params = Object.keys(this).reduce((previousValue, key) => {
+
+      if (key === 'driver') {
+        const value = this.driver.toParams();
+        return `${previousValue} ${value}`;
+      }
+
+      const value = this[key];
+      const key2 = _.snakeCase(key).replace('_', '-');
+      if (value) {
+        return `${previousValue} --${key2} ${value}`;
+      } else {
+        return previousValue;
+      }
+    }, '');
+
+    return params;
+  }
 }
 
 export interface Driver {
@@ -175,9 +210,6 @@ export class AWSDriver implements Driver {
     private zone: string,
     private instanceType: string,
     private rootSize: string,
-    private swarm: string,
-    private swarmDiscovery: string,
-    private swarmMaster: string,
     private securityGroup: string
   ) { }
 
