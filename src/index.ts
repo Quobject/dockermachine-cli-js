@@ -1,10 +1,8 @@
-﻿import * as _ from 'lodash';
-import * as Promise from 'bluebird';
-import * as child_process from 'child_process';
+﻿import * as child_process from 'child_process';
 import * as os from 'os';
+import nodeify from './nodeify';
 import { cliTable2Json } from 'cli-table-2-json';
 const exec = child_process.exec;
-
 
 const extractResult = function (result) {
 
@@ -92,19 +90,18 @@ const extractResult = function (result) {
   return result;
 };
 
-
 export class DockerMachine {
 
-  constructor(private options: IOptions = new Options()) { }
+  constructor(private options = new Options()) { }
 
-  public command(command: string, callback?: (err, data) => void) {
+  public command(command: string, callback?: (err, data) => void): Promise<any> {
     let dockerMachine = this;
     let execCommand = 'docker-machine ' + command;
 
-    return Promise.resolve().then(function () {
+    const promise = Promise.resolve().then(function () {
       // let params = this.options.driver.toParams()       
       // console.log('dockerMachine = ', dockerMachine)
-      let params = dockerMachine.options.driver.toParams();
+      let params = dockerMachine.options.toParams();
       //console.log('params = ', params);
 
       execCommand += ' ' + params;
@@ -120,7 +117,7 @@ export class DockerMachine {
         maxBuffer: 200 * 1024 * 1024,
       };
 
-      console.log('exec options =', execOptions);
+      //console.log('exec options =', execOptions);
 
       return new Promise(function (resolve, reject) {
         exec(execCommand, execOptions, (error, stdout, stderr) => {
@@ -141,88 +138,25 @@ export class DockerMachine {
       };
       return extractResult(result);
 
-    }).nodeify(callback);
+    });
+    return nodeify(promise, callback);
   }
 }
 
-export interface IOptions {
-  driver?: Driver;
-  currentWorkingDirectory?: string;
-  swarm?: string,
-  swarmDiscovery?: string,
-  swarmMaster?: string,
 
-}
-
-export class Options implements IOptions {
+export class Options {
 
   public constructor(
-    public driver: Driver = new EmptyDriver(),
-    public currentWorkingDirectory: string = null,
-    public swarm: string = null,
-    public swarmDiscovery: string = null,
-    public swarmMaster: string = null
+    private keyValueObject = {},
+    public currentWorkingDirectory = null as string
   ) { }
 
-
   public toParams(): string {
-    const params = Object.keys(this).reduce((previousValue, key) => {
-
-      if (key === 'driver') {
-        const value = this.driver.toParams();
-        return `${previousValue} ${value}`;
-      }
-
+    const result = Object.keys(this.keyValueObject).reduce((previous, key) => {
       const value = this[key];
-      const key2 = _.snakeCase(key).replace('_', '-');
-      if (value) {
-        return `${previousValue} --${key2} ${value}`;
-      } else {
-        return previousValue;
-      }
+      return `${previous} --${key} ${value}`;
     }, '');
 
-    return params;
-  }
-}
-
-export interface Driver {
-  toParams(): string;
-}
-
-export class EmptyDriver implements Driver {
-
-  public toParams(): string {
-    return '';
-  }
-}
-
-export class AWSDriver implements Driver {
-
-  public constructor(
-    private accessKey: string,
-    private secretKey: string,
-    private region: string,
-    private vpcId: string,
-    private ami: string,
-    private zone: string,
-    private instanceType: string,
-    private rootSize: string,
-    private securityGroup: string
-  ) { }
-
-
-  public toParams(): string {
-    const params = Object.keys(this).reduce((previousValue, key) => {
-      const value = this[key];
-      const awsKey = _.snakeCase(key).replace('_', '-');
-      if (value) {
-        return `${previousValue} --amazonec2-${awsKey} ${value}`;
-      } else {
-        return previousValue;
-      }
-    }, '--driver amazonec2 ');
-
-    return params;
+    return result;
   }
 }
