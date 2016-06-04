@@ -1,6 +1,6 @@
 ﻿import * as child_process from 'child_process';
 import * as os from 'os';
-import nodeify from './nodeify';
+import nodeify from 'nodeify-ts';
 import { cliTable2Json } from 'cli-table-2-json';
 const exec = child_process.exec;
 
@@ -138,11 +138,11 @@ export class DockerMachine {
       };
       return extractResult(result);
 
-    });
+      });
+
     return nodeify(promise, callback);
   }
 }
-
 
 export class Options {
 
@@ -153,7 +153,7 @@ export class Options {
 
   public toParams(): string {
     const result = Object.keys(this.keyValueObject).reduce((previous, key) => {
-      const value = this[key];
+      const value = this.keyValueObject[key];
       return `${previous} --${key} ${value}`;
     }, '');
 

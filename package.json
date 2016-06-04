@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "cli-table-2-json": "^1.0.8",
-    "core-js": "^2.4.0"
+    "core-js": "^2.4.0",
+    "nodeify-ts": "^1.0.1"
   }
 }
