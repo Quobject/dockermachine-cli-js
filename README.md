@@ -245,7 +245,13 @@ dockerMachine.command('inspect machinename').then(function (data) {
 
 ```
 
-[npm-image]: https://img.shields.io/npm/v/nodeify-ts.svg?style=flat
-[npm-url]: https://npmjs.org/package/nodeify-ts
-[downloads-image]: https://img.shields.io/npm/dm/nodeify-ts.svg?style=flat
-[downloads-url]: https://npmjs.org/package/nodeify-ts
+
+
+## License
+
+MIT
+
+[npm-image]: https://img.shields.io/npm/v/dockermachine-cli-js.svg?style=flat
+[npm-url]: https://npmjs.org/package/dockermachine-cli-js
+[downloads-image]: https://img.shields.io/npm/dm/dockermachine-cli-js.svg?style=flat
+[downloads-url]: https://npmjs.org/package/dockermachine-cli-js
