@@ -1,6 +1,6 @@
 {
   "name": "dockermachine-cli-js",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A node.js wrapper for the docker-machine CLI",
   "main": "dist/index.js",
   "typings": "dist/index",
@@ -20,7 +20,10 @@
     "url": "git+https://github.com/Quobject/dockermachine-cli-js.git"
   },
   "keywords": [
-    "table"
+    "docker",
+    "dockermachine",
+    "docker-machine",
+    "docker-machine cli"
   ],
   "author": "Matthias Ludwig <mludwig@quobject.io>",
   "license": "MIT",
