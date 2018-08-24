@@ -1,15 +1,15 @@
-﻿import * as child_process from 'child_process';
-import * as os from 'os';
-import nodeify from 'nodeify-ts';
-import { cliTable2Json } from 'cli-table-2-json';
+import * as child_process from "child_process";
+import { cliTable2Json } from "cli-table-2-json";
+import nodeify from "nodeify-ts";
+import * as os from "os";
 const exec = child_process.exec;
 
-const extractResult = function (result) {
+const extractResult = function(result) {
 
   const extracterArray = [
     {
       re: / ls /,
-      run: function (resultp) {
+      run(resultp) {
         const obj = JSON.parse(resultp.raw);
         const lines = obj.split(os.EOL);
         resultp.machineList = cliTable2Json(lines);
@@ -18,13 +18,13 @@ const extractResult = function (result) {
     },
     {
       re: / config /,
-      run: function (resultp) {
+      run(resultp) {
         const obj = JSON.parse(resultp.raw);
         const str = obj;
-        const config = str.split(os.EOL).join(' ');
+        const config = str.split(os.EOL).join(" ");
 
-        const extractValue = function (strp: string, name: string, rep?: RegExp) {
-          const re = rep || new RegExp('--' + name + '="([\\S]*)"', 'i');
+        const extractValue = function(strp: string, name: string, rep?: RegExp) {
+          const re = rep || new RegExp("--" + name + '="([\\S]*)"', "i");
           const m = re.exec(strp);
 
           if (m !== null) {
@@ -37,13 +37,13 @@ const extractResult = function (result) {
         };
 
         resultp.machine = {
-          config: config,
+          config,
           host: extractValue(str, null, /-H=tcp:\/\/(.*):/),
           port: extractValue(str, null, /-H=tcp:\/\/.*:(\d*)/),
-          tlscacert: extractValue(str, 'tlscacert'),
-          tlscert: extractValue(str, 'tlscert'),
-          tlskey: extractValue(str, 'tlskey'),
-          tlsverify: function (strp) {
+          tlscacert: extractValue(str, "tlscacert"),
+          tlscert: extractValue(str, "tlscert"),
+          tlskey: extractValue(str, "tlskey"),
+          tlsverify: function(strp) {
             const re = /--tlsverify/;
             const m = re.exec(strp);
 
@@ -52,7 +52,7 @@ const extractResult = function (result) {
                 re.lastIndex++;
               }
             }
-            return (m && m[0] && m[0] === '--tlsverify') || false;
+            return (m && m[0] && m[0] === "--tlsverify") || false;
           } (str),
         };
 
@@ -61,9 +61,9 @@ const extractResult = function (result) {
     },
     {
       re: / inspect /,
-      run: function (resultp) {
+      run(resultp) {
         try {
-          let obj = JSON.parse(resultp.raw);
+          const obj = JSON.parse(resultp.raw);
           resultp.machine = JSON.parse(obj);
         } catch (e) {
           // do nothing
@@ -74,7 +74,7 @@ const extractResult = function (result) {
     },
   ];
 
-  extracterArray.forEach(function (extracter) {
+  extracterArray.forEach(function(extracter) {
     const re = extracter.re;
     const str = result.command;
     const m = re.exec(str);
@@ -95,22 +95,22 @@ export class DockerMachine {
   constructor(private options = new Options()) { }
 
   public command(command: string, callback?: (err, data) => void): Promise<any> {
-    let dockerMachine = this;
-    let execCommand = 'docker-machine ' + command;
+    const dockerMachine = this;
+    let execCommand = "docker-machine " + command;
 
-    const promise = Promise.resolve().then(function () {
-      // let params = this.options.driver.toParams()       
+    const promise = Promise.resolve().then(function() {
+      // let params = this.options.driver.toParams()
       // console.log('dockerMachine = ', dockerMachine)
-      let params = dockerMachine.options.toParams();
+      const params = dockerMachine.options.toParams();
       //console.log('params = ', params);
 
-      execCommand += ' ' + params;
+      execCommand += " " + params;
       //console.log('execCommand =', execCommand);
 
-      let execOptions = {
+      const execOptions = {
         cwd: dockerMachine.options.currentWorkingDirectory,
         env: {
-          DEBUG: '',
+          DEBUG: "",
           HOME: process.env.HOME,
           PATH: process.env.PATH,
         },
@@ -119,7 +119,7 @@ export class DockerMachine {
 
       //console.log('exec options =', execOptions);
 
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         exec(execCommand, execOptions, (error, stdout, stderr) => {
           if (error) {
             const message = `error: '${error}' stdout = '${stdout}' stderr = '${stderr}'`;
@@ -130,9 +130,9 @@ export class DockerMachine {
           resolve(stdout);
         });
       });
-    }).then(function (data) {
+    }).then(function(data) {
 
-      let result = {
+      const result = {
         command: execCommand,
         raw: JSON.stringify(data),
       };
@@ -148,14 +148,14 @@ export class Options {
 
   public constructor(
     private keyValueObject = {},
-    public currentWorkingDirectory = null as string
+    public currentWorkingDirectory = null as string,
   ) { }
 
   public toParams(): string {
     const result = Object.keys(this.keyValueObject).reduce((previous, key) => {
       const value = this.keyValueObject[key];
       return `${previous} --${key} ${value}`;
-    }, '');
+    }, "");
 
     return result;
   }

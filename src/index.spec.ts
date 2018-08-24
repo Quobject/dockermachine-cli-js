@@ -1,13 +1,13 @@
 /* tslint:disable:no-shadowed-variable */
 /* tslint:disable:no-unused-variable */
-import test = require('blue-tape');
-import { DockerMachine, Options } from './index';
-import * as util from 'util';
-const config = require('../my_config.json');
+import test = require("blue-tape");
+import * as util from "util";
+import { DockerMachine, Options } from "./index";
+const config = require("../my_config.json");
 
-console.log('config', config);
+console.log("config", config);
 
-test('dockermachine-cli-js', t => {
+test("dockermachine-cli-js", (t) => {
   //t.test('ls', t => {
   //  let dockerMachine = new DockerMachine();
 
@@ -77,18 +77,13 @@ test('dockermachine-cli-js', t => {
   //  });
   //});
 
-  t.test('inspect machinename', t => {
-    let dockerMachine = new DockerMachine();
+  t.test("inspect machinename", (t) => {
+    const dockerMachine = new DockerMachine();
 
-    return dockerMachine.command('inspect machinename').then(function (data) {
+    return dockerMachine.command("inspect machinename").then(function(data) {
       console.log(util.inspect(data, {depth: 10}));
       t.ok(data);
     });
   });
 
 });
-
-
-
-
-

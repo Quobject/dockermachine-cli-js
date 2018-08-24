@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "ES2016",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noLib": false,
     "declaration": true,
     "sourceMap": true,
     "removeComments": true,
-    "outDir":  "dist/"
+    "outDir": "dist/"
   },
   "files": [
     "src/index.ts",
-    "src/index.spec.ts",
-    "typings/index.d.ts"
+    "src/index.spec.ts"
   ],
   "compileOnSave": false
 }
