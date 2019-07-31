@@ -1,6 +1,6 @@
 {
   "name": "dockermachine-cli-js",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "A node.js wrapper for the docker-machine CLI",
   "main": "dist/index.js",
   "typings": "dist/index",
@@ -41,7 +41,7 @@
     "typescript": "3.1.0-dev.20180824"
   },
   "dependencies": {
-    "cli-table-2-json": "1.0.12",
+    "cli-table-2-json": "1.0.13",
     "nodeify-ts": "1.0.6"
   }
 }
